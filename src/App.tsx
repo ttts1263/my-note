@@ -9,9 +9,13 @@ function App() {
 }
 
 export function MyButton() {
+  function click() {
+    alert('클릭!!')
+  }
+
   return (
     <>
-      <button>내가만든버튼</button>
+      <button onClick={click}>내가만든버튼</button>
     </>
   )
 }
