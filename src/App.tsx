@@ -1,22 +1,13 @@
-import { Form } from './Form'
+import { useState } from 'react'
+import { Counter2 } from './Counter2'
 
 function App() {
+  const [num, setNum] = useState(0)
   return (
     <div>
-      <Form />
+      <Counter2 num={num} setNum={setNum} />
+      <Counter2 num={num} setNum={setNum} />
     </div>
-  )
-}
-
-export function MyButton() {
-  function click() {
-    alert('클릭!!')
-  }
-
-  return (
-    <>
-      <button onClick={click}>내가만든버튼</button>
-    </>
   )
 }
 
