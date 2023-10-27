@@ -20,6 +20,6 @@
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true
   },
-  "include": ["src"],
+  "include": ["src", "old/Counter2.tsx", "old/Form.tsx"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

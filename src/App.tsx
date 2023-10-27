@@ -1,14 +1,26 @@
-import { useState } from 'react'
-import { Counter2 } from './Counter2'
+import { RouterProvider, createBrowserRouter } from 'react-router-dom'
+import { HomePage } from './pages/home/HomePage'
+import { AboutPage } from './pages/about/AboutPage'
+import { routes } from './route'
+
+// 페이지를 관리하는 라우터 역할
 
 function App() {
-  const [num, setNum] = useState(0)
-  return (
-    <div>
-      <Counter2 num={num} setNum={setNum} />
-      <Counter2 num={num} setNum={setNum} />
-    </div>
+  const router = createBrowserRouter(
+    [
+      {
+        path: routes.home,
+        element: <HomePage />,
+      },
+      {
+        path: routes.about,
+        element: <AboutPage />,
+      },
+    ],
+    { basename: '/my-note' }
   )
+
+  return <RouterProvider router={router} />
 }
 
 export default App
