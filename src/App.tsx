@@ -1,7 +1,7 @@
 import { RouterProvider, createBrowserRouter } from 'react-router-dom'
 import { HomePage } from './pages/home/HomePage'
 import { AboutPage } from './pages/about/AboutPage'
-import { routes } from './route'
+import { routes } from './routes'
 
 // 페이지를 관리하는 라우터 역할
 
