@@ -3,7 +3,10 @@ import { Header } from '../../components/Header'
 import styled from '@emotion/styled'
 
 export function HomePage() {
+  // 데이터를 가져옴 (초기 데이터)
   const memos = getMemos()
+
+  // 데이터를 수정
 
   return (
     <main>
@@ -15,8 +18,7 @@ export function HomePage() {
         {memos.map((memo) => {
           return (
             <StyledMemo>
-              <div>{memo.id}</div>
-              <div className="text">{memo.text}</div>
+              <textarea>{memo.text}</textarea>
             </StyledMemo>
           )
         })}
@@ -26,11 +28,19 @@ export function HomePage() {
 }
 
 const StyledMemo = styled.div`
-  background-color: yellow;
-  div {
-    color: blue;
-  }
-  .text {
-    font-size: 40px;
+  margin-bottom: 32px;
+  padding: 12px;
+  border-radius: 12px;
+  box-shadow: 5px 5px 10px 3px lightgray;
+  background-color: #fefe6d;
+  font-size: 100px;
+  textarea {
+    font-size: 20px;
+    width: 100%;
+    min-height: 240px;
+    background-color: unset;
+    border: 0;
+    outline: 0;
+    resize: none;
   }
 `
