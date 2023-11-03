@@ -1,24 +1,32 @@
-import { getMemos } from '../../apis/memo'
+import { useState } from 'react'
+import { createMemo, getMemos } from '../../apis/memo'
 import { Header } from '../../components/Header'
 import styled from '@emotion/styled'
 
 export function HomePage() {
   // 데이터를 가져옴 (초기 데이터)
-  const memos = getMemos()
-
-  // 데이터를 수정
+  const defaultmemos = getMemos()
+  const [memos, setMemos] = useState(defaultmemos)
 
   return (
     <main>
       <Header />
 
-      <button>메모 추가</button>
+      <button
+        onClick={() => {
+          console.log('click')
+          const result = createMemo()
+          setMemos(result)
+        }}
+      >
+        메모 추가
+      </button>
 
       <div>
         {memos.map((memo) => {
           return (
-            <StyledMemo>
-              <textarea>{memo.text}</textarea>
+            <StyledMemo key={memo.id}>
+              <textarea defaultValue={memo.text} />
             </StyledMemo>
           )
         })}
@@ -35,6 +43,7 @@ const StyledMemo = styled.div`
   background-color: #fefe6d;
   font-size: 100px;
   textarea {
+    display: block; //inline, block
     font-size: 20px;
     width: 100%;
     min-height: 240px;
