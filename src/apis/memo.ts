@@ -1,4 +1,12 @@
-const allData = {
+type MemoType = {
+  id: number
+  text: string
+}
+
+const allData: {
+  memos: MemoType[]
+  lastMemoId: number
+} = {
   memos: [
     {
       id: 1,
@@ -45,8 +53,14 @@ export function getMemo(memoid: number) {
   return { ...memo }
 }
 
+// 메모 전체 업데이트
+export function updateMemos(allMemos: MemoType[]) {
+  memos = allMemos
+  return [...memos]
+}
+
 // 메모 업데이트
-export function upadtesetMemo(memoId: number, memoText: string) {
+export function updateMemo(memoId: number, memoText: string) {
   const memo = memos.find((memo) => memo.id === memoId)
   if (memo !== undefined) {
     memo.text = memoText
