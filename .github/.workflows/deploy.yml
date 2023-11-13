@@ -1,0 +1,23 @@
+name: deploy
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  'build':
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install pnpm
+        run: |
+          npm i -g pnpm
+          pnpm i
+
+      - name: Build react
+        run: pnpm build
+
+      - name: Deploy gh-pages
+        run: pnpm gh-pages
