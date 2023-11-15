@@ -5,7 +5,7 @@ on:
     branches: [main]
 
 jobs:
-  'build':
+  'deploy':
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -20,4 +20,7 @@ jobs:
         run: pnpm build
 
       - name: Deploy gh-pages
-        run: pnpm gh-pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./dist
