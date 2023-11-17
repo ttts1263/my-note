@@ -25,9 +25,11 @@ export function HomePage() {
 
         <StyledSaveButton
           onClick={() => {
-            const result = updateMemos(memos)
-            setMemos(result)
-            console.log(result)
+            if (confirm('저장하시겠습니까?')) {
+              const result = updateMemos(memos)
+              setMemos(result)
+              console.log(result)
+            }
           }}
         >
           저장
@@ -39,8 +41,10 @@ export function HomePage() {
               <StyledMemo key={memo.id}>
                 <StyledDeleteButton
                   onClick={() => {
-                    deleteMemo(memo.id)
-                    setMemos(getMemos())
+                    // 한번 물어보기
+                    if (confirm('정말 삭제하시겠습니까?')) {
+                      setMemos(deleteMemo(memo.id))
+                    }
                   }}
                 >
                   X
