@@ -5,4 +5,7 @@ import react from '@vitejs/plugin-react'
 export default defineConfig({
   plugins: [react()],
   base: 'https://ttts1263.github.io/my-note',
+  server: {
+    open: true,
+  },
 })
