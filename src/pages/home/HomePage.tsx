@@ -2,11 +2,14 @@ import { useState } from 'react'
 import { createMemo, deleteMemo, getMemos, updateMemos } from '../../apis/memo'
 import { Header } from '../../components/Header'
 import styled from '@emotion/styled'
+import { useNavigate } from 'react-router'
 
 export function HomePage() {
   // 데이터를 가져옴 (초기 데이터)
   const defaultmemos = getMemos()
   const [memos, setMemos] = useState(defaultmemos)
+
+  const navigate = useNavigate()
 
   return (
     <StyledPageDiv>
@@ -38,7 +41,12 @@ export function HomePage() {
         <div>
           {memos.map((memo) => {
             return (
-              <StyledMemo key={memo.id}>
+              <StyledMemo
+                key={memo.id}
+                onClick={() => {
+                  navigate(`memo?memoId=${memo.id}`)
+                }}
+              >
                 <StyledDeleteButton
                   onClick={() => {
                     // 한번 물어보기
@@ -50,22 +58,23 @@ export function HomePage() {
                   X
                 </StyledDeleteButton>
                 <textarea
+                  readOnly
                   defaultValue={memo.text}
-                  onChange={(event) => {
-                    const value = event.target.value
-                    setMemos((memos) => {
-                      const newMemos = memos.map((item) => {
-                        if (item.id === memo.id) {
-                          return {
-                            id: memo.id,
-                            text: value,
-                          }
-                        }
-                        return item
-                      })
-                      return newMemos
-                    })
-                  }}
+                  // onChange={(event) => {
+                  //   const value = event.target.value
+                  //   setMemos((memos) => {
+                  //     const newMemos = memos.map((item) => {
+                  //       if (item.id === memo.id) {
+                  //         return {
+                  //           id: memo.id,
+                  //           text: value,
+                  //         }
+                  //       }
+                  //       return item
+                  //     })
+                  //     return newMemos
+                  //   })
+                  // }}
                 />
               </StyledMemo>
             )

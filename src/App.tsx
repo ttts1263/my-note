@@ -1,6 +1,6 @@
 import { RouterProvider, createBrowserRouter } from 'react-router-dom'
 import { HomePage } from './pages/home/HomePage'
-import { AboutPage } from './pages/about/AboutPage'
+import { MemoPage } from './pages/about/MemoPage'
 import { routes } from './routes'
 
 // 페이지를 관리하는 라우터 역할
@@ -13,8 +13,8 @@ function App() {
         element: <HomePage />,
       },
       {
-        path: routes.about,
-        element: <AboutPage />,
+        path: routes.memo,
+        element: <MemoPage />,
       },
     ],
     { basename: '/my-note' }

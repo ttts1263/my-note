@@ -28,7 +28,7 @@ export function createMemo() {
 }
 
 // 전체메모 가져오기
-export function getMemos() {
+export function getMemos(): MemoType[] {
   const memosString = localStorage.getItem('memos') || '[]'
   try {
     const memos = memosString ? JSON.parse(memosString) : []
@@ -38,10 +38,10 @@ export function getMemos() {
   }
 }
 
-//메모 가져오기
-export function getMemo(memoid: number) {
+//메모 1개 가져오기
+export function getMemo(memoId: number) {
   const memos = getMemos()
-  const memo = memos.find((memo) => memo.id === memoid)
+  const memo = memos.find((memo) => memo.id === memoId)
   return { ...memo }
 }
 
