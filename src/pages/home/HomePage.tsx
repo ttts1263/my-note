@@ -57,8 +57,9 @@ export function HomePage() {
                 >
                   X
                 </StyledDeleteButton>
+                {/* 여기 아래에 담아야함 */}
                 <textarea
-                  readOnly
+                  readOnly //  <---- 이름 그대로 읽기 전용, const와 다른 느낌이라고 함
                   defaultValue={memo.text}
                   // onChange={(event) => {
                   //   const value = event.target.value
