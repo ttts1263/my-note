@@ -89,6 +89,7 @@ export function HomePage() {
 const StyledPageDiv = styled.div`
   max-width: 360px;
   margin: auto;
+  padding-top: 48px;
 `
 
 const StyledMemo = styled.div`

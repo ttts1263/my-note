@@ -1,6 +1,7 @@
 import { useSearchParams } from 'react-router-dom'
 import { getMemo } from '../../apis/memo'
 import styled from '@emotion/styled'
+import { Header } from '../../components/Header'
 
 export function MemoPage() {
   // 구조분해할당
@@ -14,18 +15,42 @@ export function MemoPage() {
 
   //TODO: 메모 텍스트를 textarea에 담아서 화면에 표시하기
   return (
-    <StyledMemoPage>
-      <div>
-        <div>MemoPage</div>
-        <div>memoId: {memoId}</div>
-        <textarea defaultValue={memo.text} />
-      </div>
-    </StyledMemoPage>
+    <>
+      <Header />
+      <StyledMemoPage>
+        <StyledMemo key={memo.id}>
+          <textarea defaultValue={memo.text} />
+        </StyledMemo>
+      </StyledMemoPage>
+    </>
   )
 }
 
 const StyledMemoPage = styled.div`
-  position: absolute;
-  font-size: 80px;
-  left: 30%;
+  margin: auto;
+  max-width: 360px;
+  height: 100vh;
+  padding-top: 48px;
+`
+
+const StyledMemo = styled.div`
+  height: 100%;
+  width: 100%;
+  position: relative;
+  margin-bottom: 32px;
+  padding: 12px;
+  border-radius: 12px;
+  box-shadow: 5px 5px 10px 3px lightgray;
+  background-color: #fefe6d;
+
+  textarea {
+    display: block; //inline, block
+    font-size: 20px;
+    width: 100%;
+    height: 100%;
+    background-color: unset;
+    border: 0;
+    outline: 0;
+    resize: none;
+  }
 `
