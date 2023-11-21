@@ -7,11 +7,14 @@ export function Header() {
 
   return (
     <StyledHeader>
-      <button
+      {/* TODO: 버튼을 왼쪽에 위치시키기 */}
+      <Leftbutton
         onClick={() => {
           navigate(routes.home)
         }}
-      >{`<`}</button>
+      >
+        {`<`}
+      </Leftbutton>
       <span className="header">헤더</span>
     </StyledHeader>
   )
@@ -27,4 +30,8 @@ const StyledHeader = styled.header`
   font-size: 24px;
   background-color: white;
   text-align: center;
+`
+const Leftbutton = styled.button`
+  position: fixed;
+  left: 40%;
 `

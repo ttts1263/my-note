@@ -13,7 +13,6 @@ export function MemoPage() {
 
   const memo = getMemo(Number(memoId))
 
-  //TODO: 메모 텍스트를 textarea에 담아서 화면에 표시하기
   return (
     <>
       <Header />
