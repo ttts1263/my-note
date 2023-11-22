@@ -53,6 +53,8 @@ export function updateMemos(allMemos: MemoType[]) {
 }
 
 // 메모 업데이트
+// export function updateMemo(memoId: number, memoText: string)
+
 // export function updateMemo(memoId: number, memoText: string) {
 //   const memo = memos.find((memo) => memo.id === memoId)
 //   if (memo !== undefined) {

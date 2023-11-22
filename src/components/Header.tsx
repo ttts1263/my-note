@@ -7,15 +7,19 @@ export function Header() {
 
   return (
     <StyledHeader>
-      {/* TODO: 버튼을 왼쪽에 위치시키기 */}
-      <Leftbutton
-        onClick={() => {
-          navigate(routes.home)
-        }}
-      >
-        {`<`}
-      </Leftbutton>
-      <span className="header">헤더</span>
+      <StyledTitle>Simple Note</StyledTitle>
+
+      <StyledLeftButtons>
+        <StyledBackButton
+          onClick={() => {
+            navigate(routes.home)
+          }}
+        >
+          {`<`}
+        </StyledBackButton>
+      </StyledLeftButtons>
+
+      <StyledRightButtons></StyledRightButtons>
     </StyledHeader>
   )
 }
@@ -23,15 +27,46 @@ export function Header() {
 const StyledHeader = styled.header`
   position: fixed;
   top: 0;
-  left: 0;
+  left: 50%;
+  transform: translateX(-50%);
   z-index: 1;
-  width: 100%;
+
+  display: flex;
+  align-items: center; // 세로
+  justify-content: space-between; // 가로
+
+  width: 360px;
   padding: 8px;
   font-size: 24px;
   background-color: white;
   text-align: center;
 `
-const Leftbutton = styled.button`
-  position: fixed;
-  left: 40%;
+
+const StyledTitle = styled.span`
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 `
+
+const StyledLeftButtons = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+
+  button {
+    background: none;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    height: 24px;
+    :hover {
+      background-color: lightgray;
+    }
+  }
+`
+
+const StyledRightButtons = StyledLeftButtons
+
+const StyledBackButton = styled.button``

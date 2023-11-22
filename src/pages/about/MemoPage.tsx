@@ -16,6 +16,20 @@ export function MemoPage() {
   return (
     <>
       <Header />
+
+      <StyledSaveButton
+        onClick={() => {
+          if (confirm('저장하시겠습니까?')) {
+            // TODO: 메모 업데이트
+            // const result = updateMemo(memos)
+            // setMemos(result)
+            // console.log(result)
+          }
+        }}
+      >
+        저장
+      </StyledSaveButton>
+
       <StyledMemoPage>
         <StyledMemo key={memo.id}>
           <textarea defaultValue={memo.text} />
@@ -24,6 +38,16 @@ export function MemoPage() {
     </>
   )
 }
+
+const StyledSaveButton = styled.button`
+  position: fixed;
+  bottom: 30px;
+  right: 30px; // TODO: 반응형 화면에 맞추기
+  z-index: 10;
+  border-radius: 50%;
+  height: 50px;
+  width: 50px;
+`
 
 const StyledMemoPage = styled.div`
   margin: auto;

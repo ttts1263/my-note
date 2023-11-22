@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { createMemo, deleteMemo, getMemos, updateMemos } from '../../apis/memo'
+import { createMemo, deleteMemo, getMemos } from '../../apis/memo'
 import { Header } from '../../components/Header'
 import styled from '@emotion/styled'
 import { useNavigate } from 'react-router'
@@ -25,18 +25,6 @@ export function HomePage() {
         >
           메모 추가
         </button>
-
-        <StyledSaveButton
-          onClick={() => {
-            if (confirm('저장하시겠습니까?')) {
-              const result = updateMemos(memos)
-              setMemos(result)
-              console.log(result)
-            }
-          }}
-        >
-          저장
-        </StyledSaveButton>
 
         <div>
           {memos.map((memo) => {
@@ -90,6 +78,7 @@ const StyledPageDiv = styled.div`
   max-width: 360px;
   margin: auto;
   padding-top: 48px;
+  background-color: blue;
 `
 
 const StyledMemo = styled.div`
@@ -100,6 +89,8 @@ const StyledMemo = styled.div`
   box-shadow: 5px 5px 10px 3px lightgray;
   background-color: #fefe6d;
   font-size: 100px;
+  cursor: pointer;
+
   textarea {
     display: block; //inline, block
     font-size: 20px;
@@ -109,6 +100,7 @@ const StyledMemo = styled.div`
     border: 0;
     outline: 0;
     resize: none;
+    cursor: pointer;
   }
 `
 
@@ -116,14 +108,4 @@ const StyledDeleteButton = styled.button`
   position: absolute;
   top: 12px;
   right: 12px;
-`
-
-const StyledSaveButton = styled.button`
-  position: fixed;
-  bottom: 30px;
-  right: 30px; // TODO: 반응형 화면에 맞추기
-  z-index: 10;
-  border-radius: 50%;
-  height: 50px;
-  width: 50px;
 `
