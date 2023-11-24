@@ -42,7 +42,7 @@ export function getMemos(): MemoType[] {
 export function getMemo(memoId: number) {
   const memos = getMemos()
   const memo = memos.find((memo) => memo.id === memoId)
-  return { ...memo }
+  return memo ? { ...memo } : undefined
 }
 
 // 메모 전체 업데이트
@@ -53,16 +53,15 @@ export function updateMemos(allMemos: MemoType[]) {
 }
 
 // 메모 업데이트
-// export function updateMemo(memoId: number, memoText: string)
-
-// export function updateMemo(memoId: number, memoText: string) {
-//   const memo = memos.find((memo) => memo.id === memoId)
-//   if (memo !== undefined) {
-//     memo.text = memoText
-//     return true
-//   }
-//   return false
-// }
+export function updateMemo(memoId: number, memoText: string) {
+  const memos = getMemos()
+  const memo = memos.find((memo) => memo.id === memoId)
+  if (memo !== undefined) {
+    memo.text = memoText
+  }
+  localStorage.setItem('memos', JSON.stringify(memos))
+  return [...memos]
+}
 
 // 메모 삭제
 export function deleteMemo(memoId: number) {

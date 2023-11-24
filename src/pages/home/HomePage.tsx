@@ -45,25 +45,10 @@ export function HomePage() {
                 >
                   X
                 </StyledDeleteButton>
-                {/* 여기 아래에 담아야함 */}
+
                 <textarea
                   readOnly //  <---- 이름 그대로 읽기 전용, const와 다른 느낌이라고 함
                   defaultValue={memo.text}
-                  // onChange={(event) => {
-                  //   const value = event.target.value
-                  //   setMemos((memos) => {
-                  //     const newMemos = memos.map((item) => {
-                  //       if (item.id === memo.id) {
-                  //         return {
-                  //           id: memo.id,
-                  //           text: value,
-                  //         }
-                  //       }
-                  //       return item
-                  //     })
-                  //     return newMemos
-                  //   })
-                  // }}
                 />
               </StyledMemo>
             )
@@ -78,7 +63,7 @@ const StyledPageDiv = styled.div`
   max-width: 360px;
   margin: auto;
   padding-top: 48px;
-  background-color: blue;
+  height: 100vh;
 `
 
 const StyledMemo = styled.div`

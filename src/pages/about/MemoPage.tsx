@@ -1,7 +1,8 @@
 import { useSearchParams } from 'react-router-dom'
-import { getMemo } from '../../apis/memo'
+import { getMemo, updateMemo } from '../../apis/memo'
 import styled from '@emotion/styled'
 import { Header } from '../../components/Header'
+import { useState } from 'react'
 
 export function MemoPage() {
   // 구조분해할당
@@ -9,9 +10,18 @@ export function MemoPage() {
   // const var1 = arr.var1
   // cosnt [var1] = arr
   const [searchParams] = useSearchParams()
-  const memoId = searchParams.get('memoId')
+  const memoId = Number(searchParams.get('memoId') || '')
 
-  const memo = getMemo(Number(memoId))
+  const memo = getMemo(memoId)
+  const [memoText, setMemoText] = useState(memo?.text || '')
+  // and, or 연산다
+  // A && B => a 가 true면 B, A가 false면 false
+  // A || B => A가 true면 true, A가 false면 B
+  const [fontSize, setFontSize] = useState(20)
+
+  if (memo === undefined) {
+    return <div>존재하지 않는 메모입니다.</div>
+  }
 
   return (
     <>
@@ -19,20 +29,42 @@ export function MemoPage() {
 
       <StyledSaveButton
         onClick={() => {
-          if (confirm('저장하시겠습니까?')) {
-            // TODO: 메모 업데이트
-            // const result = updateMemo(memos)
-            // setMemos(result)
-            // console.log(result)
-          }
+          updateMemo(Number(memoId), memoText)
+          alert('저장완료')
         }}
       >
         저장
       </StyledSaveButton>
 
       <StyledMemoPage>
+        <div>
+          <button
+            onClick={() => {
+              setFontSize(fontSize + 2 >= 40 ? 40 : fontSize + 2)
+            }}
+          >
+            글씨 +
+          </button>
+          <button
+            onClick={() => {
+              setFontSize(fontSize - 2 <= 12 ? 12 : fontSize - 2)
+            }}
+          >
+            글씨 -
+          </button>
+        </div>
+
         <StyledMemo key={memo.id}>
-          <textarea defaultValue={memo.text} />
+          <textarea
+            style={{
+              fontSize: `${fontSize}px`,
+            }}
+            defaultValue={memo.text}
+            onChange={(e) => {
+              const value = e.target.value
+              setMemoText(value)
+            }}
+          />
         </StyledMemo>
       </StyledMemoPage>
     </>
