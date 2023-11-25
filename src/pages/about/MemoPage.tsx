@@ -26,7 +26,6 @@ export function MemoPage() {
   return (
     <>
       <Header />
-
       <StyledSaveButton
         onClick={() => {
           updateMemo(Number(memoId), memoText)
@@ -38,20 +37,20 @@ export function MemoPage() {
 
       <StyledMemoPage>
         <div>
-          <button
+          <StyledTextSizeButtons
             onClick={() => {
               setFontSize(fontSize + 2 >= 40 ? 40 : fontSize + 2)
             }}
           >
             글씨 +
-          </button>
-          <button
+          </StyledTextSizeButtons>
+          <StyledTextSizeButtons
             onClick={() => {
               setFontSize(fontSize - 2 <= 12 ? 12 : fontSize - 2)
             }}
           >
             글씨 -
-          </button>
+          </StyledTextSizeButtons>
         </div>
 
         <StyledMemo key={memo.id}>
@@ -108,4 +107,14 @@ const StyledMemo = styled.div`
     outline: 0;
     resize: none;
   }
+`
+const StyledTextSizeButtons = styled.button`
+  margin: 10px;
+  width: 55px;
+  height: 45px;
+  background-color: orange;
+  border-radius: 40%;
+  border-color: transparent;
+  cursor: pointer;
+  color: white;
 `
