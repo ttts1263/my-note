@@ -16,6 +16,14 @@ export function HomePage() {
       <main>
         <Header />
 
+        <StyledRefreshButton
+          onClick={() => {
+            navigate(0) // 새로고침
+          }}
+        >
+          새로고침
+        </StyledRefreshButton>
+
         <button
           onClick={() => {
             console.log('click')
@@ -58,6 +66,16 @@ export function HomePage() {
     </StyledPageDiv>
   )
 }
+
+const StyledRefreshButton = styled.button`
+  position: fixed;
+  bottom: 30px;
+  right: 30px; // TODO: 반응형 화면에 맞추기
+  z-index: 10;
+  border-radius: 50%;
+  height: 50px;
+  width: 50px;
+`
 
 const StyledPageDiv = styled.div`
   max-width: 360px;
