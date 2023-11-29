@@ -1,22 +1,28 @@
 import styled from '@emotion/styled'
-import { useNavigate } from 'react-router'
+import { useLocation, useNavigate } from 'react-router'
 import { routes } from '../routes'
 
 export function Header() {
   const navigate = useNavigate()
+  const location = useLocation()
+  const isHome = location.pathname === routes.home
 
   return (
     <StyledHeader>
       <StyledTitle>Simple Note</StyledTitle>
 
       <StyledLeftButtons>
-        <StyledBackButton
-          onClick={() => {
-            navigate(routes.home)
-          }}
-        >
-          {`<`}
-        </StyledBackButton>
+        {isHome ? (
+          <span>{` `}</span>
+        ) : (
+          <StyledBackButton
+            onClick={() => {
+              navigate(routes.home)
+            }}
+          >
+            {`<`}
+          </StyledBackButton>
+        )}
       </StyledLeftButtons>
 
       <StyledRightButtons></StyledRightButtons>
@@ -54,6 +60,7 @@ const StyledLeftButtons = styled.div`
   align-items: center;
   justify-content: center;
   gap: 8px;
+  height: 24px;
 
   button {
     background: none;

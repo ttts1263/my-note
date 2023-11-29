@@ -44,7 +44,9 @@ export function HomePage() {
                 }}
               >
                 <StyledDeleteButton
-                  onClick={() => {
+                  onClick={(e) => {
+                    // 이벤트 버블링(전파)을 막음
+                    e.stopPropagation()
                     // 한번 물어보기
                     if (confirm('정말 삭제하시겠습니까?')) {
                       setMemos(deleteMemo(memo.id))
