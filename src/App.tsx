@@ -1,6 +1,6 @@
 import { RouterProvider, createBrowserRouter } from 'react-router-dom'
 import { HomePage } from './pages/home/HomePage'
-import { MemoPage } from './pages/about/MemoPage'
+import { MemoPage } from './pages/memo/MemoPage'
 import { routes } from './routes'
 
 // 페이지를 관리하는 라우터 역할

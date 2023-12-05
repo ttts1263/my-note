@@ -5,6 +5,7 @@ import { Header } from '../../components/Header'
 import { useRef, useState } from 'react'
 import { Space } from '../../components/Space'
 import { Toast } from '../../components/Toast'
+import { useToast } from '../../components/useToast'
 
 export function MemoPage() {
   // 구조분해할당
@@ -23,13 +24,21 @@ export function MemoPage() {
 
   const timeoutId = useRef<ReturnType<typeof setTimeout>>()
 
+  const { openToast } = useToast()
+
   if (memo === undefined) {
     return <div>존재하지 않는 메모입니다.</div>
   }
 
   return (
     <>
-      <Toast />
+      <button
+        onClick={() => {
+          openToast()
+        }}
+      >
+        토스트
+      </button>
 
       <Header />
 
