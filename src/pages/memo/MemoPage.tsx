@@ -4,7 +4,6 @@ import styled from '@emotion/styled'
 import { Header } from '../../components/Header'
 import { useRef, useState } from 'react'
 import { Space } from '../../components/Space'
-import { Toast } from '../../components/Toast'
 import { useToast } from '../../components/useToast'
 
 export function MemoPage() {
