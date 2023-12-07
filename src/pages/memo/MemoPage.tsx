@@ -72,6 +72,14 @@ export function MemoPage() {
               fontSize: `${fontSize}px`,
             }}
             defaultValue={memo.text}
+            onKeyDown={(e) => {
+              if (e.altKey && e.key === '1') {
+                setFontSize(fontSize + 2 >= 40 ? 40 : fontSize + 2)
+              }
+              if (e.altKey && e.key === '2') {
+                setFontSize(fontSize - 2 <= 12 ? 12 : fontSize - 2)
+              }
+            }}
             onChange={(e) => {
               const value = e.target.value
               setMemoText(value)
