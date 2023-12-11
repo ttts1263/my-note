@@ -1,8 +1,8 @@
 import { useSearchParams } from 'react-router-dom'
-import { getMemo, updateMemo } from '../../apis/memo'
+import { MemoType, getMemo, updateMemo } from '../../apis/memo'
 import styled from '@emotion/styled'
 import { Header } from '../../components/Header'
-import { useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { Space } from '../../components/Space'
 import { useToast } from '../../components/useToast'
 
@@ -14,8 +14,8 @@ export function MemoPage() {
   const [searchParams] = useSearchParams()
   const memoId = Number(searchParams.get('memoId') || '')
 
-  const memo = getMemo(memoId)
-  const [memoText, setMemoText] = useState(memo?.text || '')
+  const [memo, setMemo] = useState<MemoType | undefined>()
+  const [memoText, setMemoText] = useState('')
   // and, or 연산자
   // A && B => a 가 true면 B, A가 false면 false
   // A || B => A가 true면 true, A가 false면 B
@@ -25,19 +25,19 @@ export function MemoPage() {
 
   const { openToast, toasts } = useToast()
 
+  useEffect(() => {
+    getMemo(memoId).then((result) => {
+      setMemo(result)
+      setMemoText(result?.text || '')
+    })
+  }, [memoId])
+
   if (memo === undefined) {
     return <div>존재하지 않는 메모입니다.</div>
   }
 
   return (
     <>
-      <button
-        onClick={() => {
-          openToast('토스트 클릭!')
-        }}
-      >
-        토스트
-      </button>
       <Header />
 
       <StyledMemoPage>
@@ -102,12 +102,12 @@ export function MemoPage() {
 
                 timeoutId.current = setTimeout(() => {
                   updateMemo(Number(memoId), memoText)
-                  console.log(`저장완료: ${memoText}`)
+                  openToast('저장완료')
                 }, 1000)
               } else {
                 timeoutId.current = setTimeout(() => {
                   updateMemo(Number(memoId), memoText)
-                  console.log(`저장완료: ${memoText}`)
+                  openToast('저장완료')
                 }, 1000) //ms. 1000ms = 1s
               }
             }}

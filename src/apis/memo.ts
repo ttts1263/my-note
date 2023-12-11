@@ -1,13 +1,13 @@
-type MemoType = {
+export type MemoType = {
   id: number
   text: string
 }
 
-// CRUD (Create, Read, Upadte ,Dlete)
+// CRUD (Create, Read, Update, Delete)
 // 메모 생성
-export function createMemo() {
+export async function createMemo() {
   // 로컬스토리지에서 메모 불러오기
-  const localMemos = getMemos()
+  const localMemos = await getMemos()
 
   // newId 생성하기
   let maxId = 1
@@ -28,7 +28,7 @@ export function createMemo() {
 }
 
 // 전체메모 가져오기
-export function getMemos(): MemoType[] {
+export async function getMemos(): Promise<MemoType[]> {
   const memosString = localStorage.getItem('memos') || '[]'
   try {
     const memos = memosString ? JSON.parse(memosString) : []
@@ -39,22 +39,22 @@ export function getMemos(): MemoType[] {
 }
 
 //메모 1개 가져오기
-export function getMemo(memoId: number) {
-  const memos = getMemos()
+export async function getMemo(memoId: number) {
+  const memos = await getMemos()
   const memo = memos.find((memo) => memo.id === memoId)
   return memo ? { ...memo } : undefined
 }
 
 // 메모 전체 업데이트
-export function updateMemos(allMemos: MemoType[]) {
+export async function updateMemos(allMemos: MemoType[]) {
   // allMemos를 로컬스토리지에 저장
   localStorage.setItem('memos', JSON.stringify(allMemos))
   return [...allMemos]
 }
 
 // 메모 업데이트
-export function updateMemo(memoId: number, memoText: string) {
-  const memos = getMemos()
+export async function updateMemo(memoId: number, memoText: string) {
+  const memos = await getMemos()
   const memo = memos.find((memo) => memo.id === memoId)
   if (memo !== undefined) {
     memo.text = memoText
@@ -64,8 +64,8 @@ export function updateMemo(memoId: number, memoText: string) {
 }
 
 // 메모 삭제
-export function deleteMemo(memoId: number) {
-  const memos = getMemos()
+export async function deleteMemo(memoId: number) {
+  const memos = await getMemos()
   const startIndex = memos.findIndex((memo) => memo.id === memoId)
   if (startIndex === -1) {
     return [...memos]

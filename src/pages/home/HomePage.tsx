@@ -1,15 +1,20 @@
-import { useState } from 'react'
-import { createMemo, deleteMemo, getMemos } from '../../apis/memo'
+import { useEffect, useState } from 'react'
+import { MemoType, createMemo, deleteMemo, getMemos } from '../../apis/memo'
 import { Header } from '../../components/Header'
 import styled from '@emotion/styled'
 import { useNavigate } from 'react-router'
 
 export function HomePage() {
-  // 데이터를 가져옴 (초기 데이터)
-  const defaultmemos = getMemos()
-  const [memos, setMemos] = useState(defaultmemos)
+  const [memos, setMemos] = useState<MemoType[]>([])
 
   const navigate = useNavigate()
+
+  useEffect(() => {
+    // 데이터를 가져옴 (초기 데이터)
+    getMemos().then((result) => {
+      setMemos(result)
+    })
+  }, [])
 
   return (
     <StyledPageDiv>
@@ -25,9 +30,9 @@ export function HomePage() {
         </StyledRefreshButton>
 
         <button
-          onClick={() => {
+          onClick={async () => {
             console.log('click')
-            const result = createMemo()
+            const result = await createMemo()
             setMemos(result)
           }}
         >
@@ -44,12 +49,12 @@ export function HomePage() {
                 }}
               >
                 <StyledDeleteButton
-                  onClick={(e) => {
+                  onClick={async (e) => {
                     // 이벤트 버블링(전파)을 막음
                     e.stopPropagation()
                     // 한번 물어보기
                     if (confirm('정말 삭제하시겠습니까?')) {
-                      setMemos(deleteMemo(memo.id))
+                      setMemos(await deleteMemo(memo.id))
                     }
                   }}
                 >

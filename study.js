@@ -34,17 +34,22 @@
 
 // 숫자를 입력받아서 랜덤한 시간 이후 콘솔에 출력하는 함수
 function randomDelay(number) {
-  return new Promise((resolve) => {
+  return new Promise((resolve, reject) => {
     const delay = Math.random() * 1000 * 5
     setTimeout(() => {
+      if (number === 5) {
+        reject(number)
+      }
       console.log(number)
       resolve(number)
     }, delay)
   })
 }
 
-async function excuteRandomDelay() {
-  const result = await Promise.all([
+// Promise,resolve, Promise.reject 를 이용해서 비동기함수를 만들 수 있다.
+
+async function executeRandomDelay() {
+  const result = await Promise.allSettled([
     randomDelay(1),
     randomDelay(2),
     randomDelay(3),
@@ -57,8 +62,9 @@ async function excuteRandomDelay() {
     randomDelay(10),
   ])
   console.log(result)
+  console.log(result.map((item) => item.value || `fall: ${item.reason}`))
 }
 
 // allSettled
 
-excuteRandomDelay()
+executeRandomDelay()
