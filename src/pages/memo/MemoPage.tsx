@@ -16,14 +16,14 @@ export function MemoPage() {
 
   const memo = getMemo(memoId)
   const [memoText, setMemoText] = useState(memo?.text || '')
-  // and, or 연산다
+  // and, or 연산자
   // A && B => a 가 true면 B, A가 false면 false
   // A || B => A가 true면 true, A가 false면 B
   const [fontSize, setFontSize] = useState(20)
 
   const timeoutId = useRef<ReturnType<typeof setTimeout>>()
 
-  const { openToast } = useToast()
+  const { openToast, toasts } = useToast()
 
   if (memo === undefined) {
     return <div>존재하지 않는 메모입니다.</div>
@@ -38,10 +38,10 @@ export function MemoPage() {
       >
         토스트
       </button>
-
       <Header />
 
       <StyledMemoPage>
+        <div>{toasts}</div>
         <Space height={12} />
 
         <div>

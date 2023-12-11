@@ -24,8 +24,14 @@ const StyledToastDiv = styled.div`
     0% {
       bottom: -10px;
     }
+    25% {
+      bottom: 80px;
+    }
     50% {
-      bottom: 100px;
+      bottom: 80px;
+    }
+    75% {
+      bottom: 80px;
     }
     100% {
       bottom: -10px;
