@@ -9,9 +9,12 @@ import { useState } from 'react'
  */
 export function useToast() {
   const [toasts, setToasts] = useState<React.ReactPortal[]>([])
+
   // 토스트 컴포넌트를 DOM에 추가하는 코드
-  function openToast() {
+  function openToast(text: string) {
     const toastId = Math.random().toString()
+
+    // 4초 뒤에 토스트를 사라지게 하는 코드
     setTimeout(() => {
       setToasts((toasts) => {
         return toasts.filter((toast) => {
@@ -19,8 +22,12 @@ export function useToast() {
         })
       })
     }, 4000)
+
     return setToasts((toasts) => {
-      return [...toasts, createPortal(<Toast />, document.body, toastId)]
+      return [
+        ...toasts,
+        createPortal(<Toast text={text} />, document.body, toastId),
+      ]
     })
   }
 

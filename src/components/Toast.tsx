@@ -1,7 +1,7 @@
 import styled from '@emotion/styled'
 
-export function Toast() {
-  return <StyledToastDiv>토스트</StyledToastDiv>
+export function Toast({ text }: { text: string }) {
+  return <StyledToastDiv>{text}</StyledToastDiv>
 }
 
 const StyledToastDiv = styled.div`

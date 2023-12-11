@@ -33,7 +33,7 @@ export function MemoPage() {
     <>
       <button
         onClick={() => {
-          openToast()
+          openToast('토스트 클릭!')
         }}
       >
         토스트
