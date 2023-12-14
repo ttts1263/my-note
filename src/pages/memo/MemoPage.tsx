@@ -81,35 +81,25 @@ export function MemoPage() {
               }
             }}
             onChange={(e) => {
-              const value = e.target.value
-              setMemoText(value)
+              const textareaValue = e.target.value
+              setMemoText(textareaValue) // 비동기함수. 이 함수가먼저 실행되지만
 
-              // 자동저장
-              // 자동저장은 일정 시간마다 텍스트를 자동으로 저장하는 것
-              // 그런데 매 초마다 저장하면 서버에 부담이 됨
-              // 꼭 필요한 경우만 보내야한다.
-              // 1. 변경이 발생할 때만 저장한다.
-              // 2. 변경이 발생하고 1초 동안 변경이 없으면 저장한다. 디바운스 (텍스트)
-              // 3. 변경이 발생하면 1초 동안 1번만 저장한다. 쓰로틀 (스크롤)
-              // 디바운스를 사용하기
+              function debounceAndUpdateMemo() {
+                if (timeoutId.current) {
+                  clearTimeout(timeoutId.current)
 
-              // WIP(Work In Progress)
-              // debounce는 처음 요청이 들어오고 1초 동안 변경이 없어야 실행 한다.
-              // 1초 안에 요청이 들어오면 타이머를 초기화(시간을 연장)한다.
-
-              if (timeoutId.current) {
-                clearTimeout(timeoutId.current)
-
-                timeoutId.current = setTimeout(() => {
-                  updateMemo(Number(memoId), memoText)
-                  openToast('저장완료')
-                }, 1000)
-              } else {
-                timeoutId.current = setTimeout(() => {
-                  updateMemo(Number(memoId), memoText)
-                  openToast('저장완료')
-                }, 1000) //ms. 1000ms = 1s
+                  timeoutId.current = setTimeout(() => {
+                    updateMemo(Number(memoId), textareaValue)
+                    openToast('저장완료')
+                  }, 1000)
+                } else {
+                  timeoutId.current = setTimeout(() => {
+                    updateMemo(Number(memoId), textareaValue)
+                    openToast('저장완료')
+                  }, 1000) //ms. 1000ms = 1s
+                }
               }
+              debounceAndUpdateMemo() // 아래 함수가 실행되고 먼저완료된다.
             }}
           />
         </StyledMemo>
@@ -156,3 +146,17 @@ const StyledTextSizeButton = styled.button`
   cursor: pointer;
   color: white;
 `
+
+// 주석 모아놓기
+// 자동저장 방식
+// 자동저장은 일정 시간마다 텍스트를 자동으로 저장하는 것
+// 그런데 매 초마다 저장하면 서버에 부담이 됨
+// 꼭 필요한 경우만 보내야한다.
+// 1. 변경이 발생할 때만 저장한다.
+// 2. 변경이 발생하고 1초 동안 변경이 없으면 저장한다. 디바운스 (텍스트)
+// 3. 변경이 발생하면 1초 동안 1번만 저장한다. 쓰로틀 (스크롤)
+// 디바운스를 사용하기
+
+// WIP(Work In Progress)
+// debounce는 처음 요청이 들어오고 1초 동안 변경이 없어야 실행 한다.
+// 1초 안에 요청이 들어오면 타이머를 초기화(시간을 연장)한다.
