@@ -25,7 +25,9 @@ export function Header() {
         )}
       </StyledLeftButtons>
 
-      <StyledRightButtons></StyledRightButtons>
+      <StyledRightButtons>
+        <button onClick={() => {}}>다크모드</button>
+      </StyledRightButtons>
     </StyledHeader>
   )
 }

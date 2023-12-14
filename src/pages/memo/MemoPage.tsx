@@ -10,25 +10,18 @@ export function MemoPage() {
   // 구조분해할당
   // const arr = [var1, var2]
   // const var1 = arr.var1
-  // cosnt [var1] = arr
+  // const [var1] = arr
   const [searchParams] = useSearchParams()
-  const memoId = Number(searchParams.get('memoId') || '')
-
   const [memo, setMemo] = useState<MemoType | undefined>()
-  const [memoText, setMemoText] = useState('')
-  // and, or 연산자
-  // A && B => a 가 true면 B, A가 false면 false
-  // A || B => A가 true면 true, A가 false면 B
   const [fontSize, setFontSize] = useState(20)
-
   const timeoutId = useRef<ReturnType<typeof setTimeout>>()
-
   const { openToast, toasts } = useToast()
+
+  const memoId = Number(searchParams.get('memoId') || '')
 
   useEffect(() => {
     getMemo(memoId).then((result) => {
       setMemo(result)
-      setMemoText(result?.text || '')
     })
   }, [memoId])
 
@@ -82,7 +75,6 @@ export function MemoPage() {
             }}
             onChange={(e) => {
               const textareaValue = e.target.value
-              setMemoText(textareaValue) // 비동기함수. 이 함수가먼저 실행되지만
 
               function debounceAndUpdateMemo() {
                 if (timeoutId.current) {
@@ -99,7 +91,7 @@ export function MemoPage() {
                   }, 1000) //ms. 1000ms = 1s
                 }
               }
-              debounceAndUpdateMemo() // 아래 함수가 실행되고 먼저완료된다.
+              debounceAndUpdateMemo()
             }}
           />
         </StyledMemo>
