@@ -1,6 +1,7 @@
 import styled from '@emotion/styled'
 import { useLocation, useNavigate } from 'react-router'
 import { routes } from '../routes'
+import { getDarkMode, setDarkMode } from '../main'
 
 export function Header() {
   const navigate = useNavigate()
@@ -26,7 +27,14 @@ export function Header() {
       </StyledLeftButtons>
 
       <StyledRightButtons>
-        <button onClick={() => {}}>다크모드</button>
+        <button
+          onClick={() => {
+            document.body.classList.toggle('dark-mode')
+            setDarkMode(!getDarkMode())
+          }}
+        >
+          다크모드
+        </button>
       </StyledRightButtons>
     </StyledHeader>
   )
@@ -46,7 +54,6 @@ const StyledHeader = styled.header`
   width: 360px;
   padding: 8px;
   font-size: 24px;
-  background-color: white;
   text-align: center;
 `
 
@@ -73,6 +80,7 @@ const StyledLeftButtons = styled.div`
     :hover {
       background-color: lightgray;
     }
+    color: ${getDarkMode() ? 'white' : 'black'};
   }
 `
 

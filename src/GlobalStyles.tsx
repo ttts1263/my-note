@@ -1,11 +1,16 @@
 import { Global, css } from '@emotion/react'
 
-export function GlobalStyles({ isDarkMode }: { isDarkMode?: boolean }) {
+export function GlobalStyles() {
   return (
     <Global
       styles={css`
         body {
-          background-color: ${isDarkMode ? '#202124' : 'white'};
+          background-color: white;
+        }
+
+        body.dark-mode {
+          background-color: #202124;
+          color: white;
         }
       `}
     />
