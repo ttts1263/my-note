@@ -1,15 +1,16 @@
 import styled from '@emotion/styled'
 import { useLocation, useNavigate } from 'react-router'
 import { routes } from '../routes'
-import { getDarkMode, setDarkMode } from '../main'
+import { useDarkModeStore } from '../zustand'
 
 export function Header() {
+  const { isDarkMode, toggleDarkMode } = useDarkModeStore()
   const navigate = useNavigate()
   const location = useLocation()
   const isHome = location.pathname === routes.home
 
   return (
-    <StyledHeader>
+    <StyledHeader className={isDarkMode ? 'dark-mode' : ''}>
       <StyledTitle>Simple Note</StyledTitle>
 
       <StyledLeftButtons>
@@ -17,6 +18,7 @@ export function Header() {
           <span>{` `}</span>
         ) : (
           <StyledBackButton
+            className={isDarkMode ? 'dark-mode' : ''}
             onClick={() => {
               navigate(routes.home)
             }}
@@ -28,9 +30,10 @@ export function Header() {
 
       <StyledRightButtons>
         <button
+          className={isDarkMode ? 'dark-mode' : ''}
           onClick={() => {
-            document.body.classList.toggle('dark-mode')
-            setDarkMode(!getDarkMode())
+            toggleDarkMode()
+            localStorage.setItem('dark-mode', isDarkMode ? 'false' : 'true')
           }}
         >
           다크모드
@@ -55,6 +58,13 @@ const StyledHeader = styled.header`
   padding: 8px;
   font-size: 24px;
   text-align: center;
+  background-color: white;
+  color: black;
+
+  &.dark-mode {
+    background-color: #202124;
+    color: white;
+  }
 `
 
 const StyledTitle = styled.span`
@@ -80,10 +90,19 @@ const StyledLeftButtons = styled.div`
     :hover {
       background-color: lightgray;
     }
-    color: ${getDarkMode() ? 'white' : 'black'};
+    &.dark-mode {
+      color: white;
+      :hover {
+        background-color: none;
+      }
+    }
   }
 `
 
 const StyledRightButtons = StyledLeftButtons
 
-const StyledBackButton = styled.button``
+const StyledBackButton = styled.button`
+  &.dark-mode {
+    color: white;
+  }
+`

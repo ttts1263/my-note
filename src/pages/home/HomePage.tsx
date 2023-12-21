@@ -3,8 +3,10 @@ import { MemoType, createMemo, deleteMemo, getMemos } from '../../apis/memo'
 import { Header } from '../../components/Header'
 import styled from '@emotion/styled'
 import { useNavigate } from 'react-router'
+import { useDarkModeStore } from '../../zustand'
 
 export function HomePage() {
+  const { isDarkMode } = useDarkModeStore()
   const [memos, setMemos] = useState<MemoType[]>([])
 
   const navigate = useNavigate()
@@ -17,7 +19,7 @@ export function HomePage() {
   }, [])
 
   return (
-    <StyledPageDiv>
+    <StyledPageDiv isDarkMode={isDarkMode}>
       <main>
         <Header />
 
@@ -30,6 +32,7 @@ export function HomePage() {
         </StyledRefreshButton>
 
         <button
+          className={isDarkMode ? 'dark-mode' : ''}
           onClick={async () => {
             console.log('click')
             const result = await createMemo()
@@ -84,11 +87,16 @@ const StyledRefreshButton = styled.button`
   width: 50px;
 `
 
-const StyledPageDiv = styled.div`
+const StyledPageDiv = styled.div<{ isDarkMode: boolean }>`
   max-width: 360px;
   margin: auto;
   padding-top: 48px;
   height: 100vh;
+
+  button.dark-mode {
+    background-color: #202124;
+    color: white;
+  }
 `
 
 const StyledMemo = styled.div`
