@@ -15,3 +15,7 @@ pnpm dev
 ```bash
 pnpm gh-deploy
 ```
+
+## .env file
+
+- VITE_GOOGLE_OAUTH_CLIENT_ID: 구글 로그인 클라이언트 ID

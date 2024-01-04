@@ -7,5 +7,6 @@ export default defineConfig({
   base: 'https://ttts1263.github.io/my-note',
   server: {
     open: true,
+    host: 'localhost',
   },
 })

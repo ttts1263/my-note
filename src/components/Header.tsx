@@ -2,12 +2,14 @@ import styled from '@emotion/styled'
 import { useLocation, useNavigate } from 'react-router'
 import { routes } from '../routes'
 import { useDarkModeStore } from '../zustand'
+import { Link } from 'react-router-dom'
 
 export function Header() {
   const { isDarkMode, toggleDarkMode } = useDarkModeStore()
   const navigate = useNavigate()
   const location = useLocation()
   const isHome = location.pathname === routes.home
+  const isLogin = location.pathname === routes.login
 
   return (
     <StyledHeader className={isDarkMode ? 'dark-mode' : ''}>
@@ -38,6 +40,8 @@ export function Header() {
         >
           다크모드
         </button>
+
+        {!isLogin && <Link to={routes.login}>로그인</Link>}
       </StyledRightButtons>
     </StyledHeader>
   )
@@ -78,10 +82,18 @@ const StyledLeftButtons = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 8px;
+  gap: 4px;
   height: 24px;
 
-  button {
+  button,
+  a {
+    font-size: 13px;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 4px;
+
     background: none;
     border: none;
     outline: none;
