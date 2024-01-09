@@ -1,6 +1,8 @@
 import styled from '@emotion/styled'
 import { useEffect, useRef } from 'react'
 import { Header } from '../../components/Header'
+// import { jwtDecode } from 'jwt-decode'
+import { updateJwt } from '../../apis/login'
 
 export function LoginPage() {
   const loadSDKFlagRef = useRef(false)
@@ -50,18 +52,11 @@ function renderGoogleLogin(divId: string) {
   console.log('renderGoogleLogin client_id:', client_id)
   google.accounts.id.initialize({
     client_id,
-    callback: (response: string) => {
-      console.log('loginCallback response:', response)
-      // decodeJwtResponse() is a custom function defined by you
-      // to decode the credential response.
-      // const responsePayload = decodeJwtResponse(response.credential);
-
-      // console.log("ID: " + responsePayload.sub);
-      // console.log('Full Name: ' + responsePayload.name);
-      // console.log('Given Name: ' + responsePayload.given_name);
-      // console.log('Family Name: ' + responsePayload.family_name);
-      // console.log("Image URL: " + responsePayload.picture);
-      // console.log("Email: " + responsePayload.email);
+    callback: async (response: { credential: string }) => {
+      // const decoded: { name: string; email: string; picture: string } =
+      //   jwtDecode(response.credential)
+      const result = await updateJwt(response.credential)
+      console.log(result)
     },
   })
   google.accounts.id.renderButton(
