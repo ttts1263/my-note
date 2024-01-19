@@ -2,7 +2,7 @@ import styled from '@emotion/styled'
 import { useEffect, useRef } from 'react'
 import { Header } from '../../components/Header'
 // import { jwtDecode } from 'jwt-decode'
-import { updateJwt } from '../../apis/login'
+import { sessionCheck, updateJwt } from '../../apis/login'
 
 export function LoginPage() {
   const loadSDKFlagRef = useRef(false)
@@ -23,6 +23,14 @@ export function LoginPage() {
       <Header />
       <StyledLoginPageDiv>
         <div id="googleLoginDiv"></div>
+        <button
+          onClick={async () => {
+            const result = await sessionCheck()
+            console.log('sessionCheck result:', result)
+          }}
+        >
+          Session Check
+        </button>
       </StyledLoginPageDiv>
     </>
   )
