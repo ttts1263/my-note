@@ -3,20 +3,29 @@ import { useLocation, useNavigate } from 'react-router'
 import { routes } from '../routes'
 import { useDarkModeStore } from '../zustand'
 import { Link } from 'react-router-dom'
+import { LoginResponseType } from '../apis/login'
 
 export function Header() {
   const { isDarkMode, toggleDarkMode } = useDarkModeStore()
   const navigate = useNavigate()
   const location = useLocation()
-  const isHome = location.pathname === routes.home
-  const isLogin = location.pathname === routes.login
+  const isHomePage = location.pathname === routes.home
+  const session = localStorage.getItem('my-note-session')
+  let userData: LoginResponseType['userData'] = {
+    email: '',
+    name: '',
+    picture: '',
+  }
+  try {
+    userData = session ? JSON.parse(session).userData : {}
+  } catch (error) {
+    console.error(error)
+  }
 
   return (
     <StyledHeader className={isDarkMode ? 'dark-mode' : ''}>
-      <StyledTitle>Simple Note</StyledTitle>
-
       <StyledLeftButtons>
-        {isHome ? (
+        {isHomePage ? (
           <span>{` `}</span>
         ) : (
           <StyledBackButton
@@ -28,6 +37,7 @@ export function Header() {
             {`<`}
           </StyledBackButton>
         )}
+        <StyledTitle>Simple Note</StyledTitle>
       </StyledLeftButtons>
 
       <StyledRightButtons>
@@ -41,7 +51,11 @@ export function Header() {
           다크모드
         </button>
 
-        {!isLogin && <Link to={routes.login}>로그인</Link>}
+        {!userData.name ? (
+          <Link to={routes.login}>로그인</Link>
+        ) : (
+          <div>{userData.name}</div>
+        )}
       </StyledRightButtons>
     </StyledHeader>
   )
@@ -60,7 +74,7 @@ const StyledHeader = styled.header`
 
   width: 360px;
   padding: 8px;
-  font-size: 24px;
+  font-size: 14px;
   text-align: center;
   background-color: white;
   color: black;
@@ -72,10 +86,7 @@ const StyledHeader = styled.header`
 `
 
 const StyledTitle = styled.span`
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  font-size: 24px;
 `
 
 const StyledLeftButtons = styled.div`
@@ -87,7 +98,7 @@ const StyledLeftButtons = styled.div`
 
   button,
   a {
-    font-size: 13px;
+    font-size: 14px;
     text-decoration: none;
     display: flex;
     align-items: center;

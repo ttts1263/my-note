@@ -1,17 +1,23 @@
 import styled from '@emotion/styled'
 import { useEffect, useRef } from 'react'
 import { Header } from '../../components/Header'
-// import { jwtDecode } from 'jwt-decode'
-import { sessionCheck, updateJwt } from '../../apis/login'
+import { LoginResponseType, sessionCheck, updateJwt } from '../../apis/login'
+import { useNavigate } from 'react-router'
 
 export function LoginPage() {
   const loadSDKFlagRef = useRef(false)
+  const navigate = useNavigate()
+
   useEffect(() => {
     if (!loadSDKFlagRef.current) {
       loadSDKFlagRef.current = true
-      loadSDKAndRenderGoogleLogin()
+      loadSDKAndRenderGoogleLogin((session) => {
+        // 로그인 성공하면 로컬스토리지에 저장
+        localStorage.setItem('my-note-session', JSON.stringify(session))
+        navigate('/')
+      })
     }
-  }, [])
+  }, [navigate])
 
   // 127.0.0.1에서는 구글로그인이 안되서 localhost로 리다이렉트
   if (location.host.includes('127.0.0.1')) {
@@ -44,27 +50,31 @@ declare global {
 }
 
 // Google Sign-In SDK 추가
-function loadSDKAndRenderGoogleLogin() {
+function loadSDKAndRenderGoogleLogin(
+  callback: (session: LoginResponseType) => void
+) {
   const script = document.createElement('script')
   script.src = 'https://accounts.google.com/gsi/client'
   script.async = true // main 스크립트 실행 > SDK 다운로드 > 리액트 실행 > SDK 실행
   document.body.appendChild(script)
   script.addEventListener('load', () => {
-    renderGoogleLogin('googleLoginDiv')
+    renderGoogleLogin('googleLoginDiv', callback)
   })
 }
 
-function renderGoogleLogin(divId: string) {
+function renderGoogleLogin(
+  divId: string,
+  callback: (session: LoginResponseType) => void
+) {
   const google = window.google
   const client_id = import.meta.env.VITE_GOOGLE_OAUTH_CLIENT_ID
   console.log('renderGoogleLogin client_id:', client_id)
   google.accounts.id.initialize({
     client_id,
     callback: async (response: { credential: string }) => {
-      // const decoded: { name: string; email: string; picture: string } =
-      //   jwtDecode(response.credential)
       const result = await updateJwt(response.credential)
-      console.log(result)
+      console.log('# login result:', result)
+      callback(result)
     },
   })
   google.accounts.id.renderButton(
