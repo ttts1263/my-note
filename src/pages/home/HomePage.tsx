@@ -4,6 +4,7 @@ import { Header } from '../../components/Header'
 import styled from '@emotion/styled'
 import { useNavigate } from 'react-router'
 import { useDarkModeStore } from '../../zustand'
+import { HEADER_HEIGHT } from '../../constants'
 
 export function HomePage() {
   const { isDarkMode } = useDarkModeStore()
@@ -90,7 +91,7 @@ const StyledRefreshButton = styled.button`
 const StyledPageDiv = styled.div<{ isDarkMode: boolean }>`
   max-width: 360px;
   margin: auto;
-  padding-top: 48px;
+  padding-top: ${HEADER_HEIGHT}px;
   height: 100vh;
 
   button.dark-mode {

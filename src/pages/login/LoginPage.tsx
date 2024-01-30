@@ -3,6 +3,7 @@ import { useEffect, useRef } from 'react'
 import { Header } from '../../components/Header'
 import { LoginResponseType, sessionCheck, updateJwt } from '../../apis/login'
 import { useNavigate } from 'react-router'
+import { localSessionKey } from '../../constants'
 
 export function LoginPage() {
   const loadSDKFlagRef = useRef(false)
@@ -13,7 +14,7 @@ export function LoginPage() {
       loadSDKFlagRef.current = true
       loadSDKAndRenderGoogleLogin((session) => {
         // 로그인 성공하면 로컬스토리지에 저장
-        localStorage.setItem('my-note-session', JSON.stringify(session))
+        localStorage.setItem(localSessionKey, JSON.stringify(session))
         navigate('/')
       })
     }

@@ -5,6 +5,7 @@ import { Header } from '../../components/Header'
 import { useEffect, useRef, useState } from 'react'
 import { Space } from '../../components/Space'
 import { useToast } from '../../components/useToast'
+import { HEADER_HEIGHT } from '../../constants'
 
 export function MemoPage() {
   // 구조분해할당
@@ -104,7 +105,7 @@ const StyledMemoPage = styled.div`
   margin: auto;
   max-width: 360px;
   height: 100vh;
-  padding-top: 48px;
+  padding-top: ${HEADER_HEIGHT}px;
 `
 
 const StyledMemo = styled.div`

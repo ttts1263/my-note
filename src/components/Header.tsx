@@ -4,13 +4,15 @@ import { routes } from '../routes'
 import { useDarkModeStore } from '../zustand'
 import { Link } from 'react-router-dom'
 import { LoginResponseType } from '../apis/login'
+import { localSessionKey } from '../constants'
+import { logoutAII } from '../utils'
 
 export function Header() {
   const { isDarkMode, toggleDarkMode } = useDarkModeStore()
   const navigate = useNavigate()
   const location = useLocation()
   const isHomePage = location.pathname === routes.home
-  const session = localStorage.getItem('my-note-session')
+  const session = localStorage.getItem(localSessionKey)
   let userData: LoginResponseType['userData'] = {
     email: '',
     name: '',
@@ -54,7 +56,17 @@ export function Header() {
         {!userData.name ? (
           <Link to={routes.login}>로그인</Link>
         ) : (
-          <div>{userData.name}</div>
+          <div
+            className="profile"
+            onClick={() => {
+              if (confirm('로그아웃 하시겠습니까?')) {
+                logoutAII(navigate)
+              }
+            }}
+          >
+            <img src={userData.picture} alt="profile" />
+            <div>{userData.name}</div>
+          </div>
         )}
       </StyledRightButtons>
     </StyledHeader>
@@ -83,6 +95,22 @@ const StyledHeader = styled.header`
     background-color: #202124;
     color: white;
   }
+  .profile {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    :hover {
+      background-color: lightgray;
+    }
+
+    img {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+    }
+  }
 `
 
 const StyledTitle = styled.span`
@@ -94,7 +122,7 @@ const StyledLeftButtons = styled.div`
   align-items: center;
   justify-content: center;
   gap: 4px;
-  height: 24px;
+  height: 100%;
 
   button,
   a {

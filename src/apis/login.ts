@@ -32,3 +32,18 @@ export async function sessionCheck() {
     console.error(error)
   }
 }
+
+export async function logout() {
+  try {
+    const result = await fetch(backendUrl + '/my-note/logout', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      credentials: 'include',
+    })
+    return result.json()
+  } catch (error) {
+    console.error(error)
+  }
+}

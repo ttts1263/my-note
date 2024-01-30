@@ -3,6 +3,7 @@ import { HomePage } from './pages/home/HomePage'
 import { MemoPage } from './pages/memo/MemoPage'
 import { routes } from './routes'
 import { LoginPage } from './pages/login/LoginPage'
+import { PageProvider } from './PageProvider'
 
 // 페이지를 관리하는 라우터 역할
 
@@ -11,15 +12,15 @@ function App() {
     [
       {
         path: routes.home,
-        element: <HomePage />,
+        element: <PageProvider children={<HomePage />} />,
       },
       {
         path: routes.memo,
-        element: <MemoPage />,
+        element: <PageProvider children={<MemoPage />} />,
       },
       {
         path: routes.login,
-        element: <LoginPage />,
+        element: <PageProvider children={<LoginPage />} />,
       },
     ],
     { basename: '/my-note' }
